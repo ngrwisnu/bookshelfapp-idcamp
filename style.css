@@ -11,6 +11,7 @@
   --neutral-60: hsl(0, 0%, 64%);
   --neutral-90: hsl(0, 0%, 29%);
   --success-color: hsl(118, 47%, 33%);
+  --button-secondary: hsl(223, 22%, 53%);
 }
 
 * {
@@ -171,7 +172,7 @@ main .c-container {
   gap: 0.5rem;
 }
 
-.card-buttons button:first-child {
+.card-buttons .card-btn-selesai {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,7 +182,7 @@ main .c-container {
   background-color: transparent;
 }
 
-.card-buttons button:last-child {
+.card-buttons .card-btn-hapus {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -189,6 +190,16 @@ main .c-container {
   border: 1px solid var(--danger-surface);
   color: var(--danger-color);
   background-color: var(--danger-surface);
+}
+
+.card-buttons .card-btn-undo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--button-secondary);
+  color: var(--button-secondary);
+  background-color: transparent;
 }
 
 /* ------------------------------------------ */
@@ -217,6 +228,9 @@ main .c-container {
 .shelf {
   width: 100%;
   padding: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   background-color: var(--secondary-color);
 }
 
