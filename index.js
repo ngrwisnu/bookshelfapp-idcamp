@@ -1,32 +1,52 @@
 const books = [];
 const RENDER_BOOK = "render-book";
+const BOOKS_SAVED = "books-saved";
+const STORAGE_KEY = "BOOKSHELF";
 
 const formInput = document.getElementById("form");
 const addBtn = document.getElementById("add");
+const clearButton = document.getElementById("delete");
+
+// Check Storage status
+function isStorageExist() {
+  if (typeof Storage === undefined) {
+    alert("Browser anda tidak mendukung local storage");
+    return false;
+  } else {
+    return true;
+  }
+}
 
 // Getting value of the input
-formInput.addEventListener("submit", (e) => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  formInput.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  const title = document.getElementById("title").value;
-  const author = document.getElementById("author").value;
-  const year = document.getElementById("year").value;
+    const title = document.getElementById("title").value;
+    const author = document.getElementById("author").value;
+    const year = document.getElementById("year").value;
 
-  const isRead = document.getElementById("checkbox").checked;
+    const isRead = document.getElementById("checkbox").checked;
 
-  const bookID = +new Date();
+    const bookID = +new Date();
 
-  const dataObject = {
-    title,
-    author,
-    year,
-    bookID,
-    isRead,
-  };
+    const dataObject = {
+      title,
+      author,
+      year,
+      bookID,
+      isRead,
+    };
 
-  books.push(dataObject);
+    books.push(dataObject);
 
-  document.dispatchEvent(new Event(RENDER_BOOK));
+    document.dispatchEvent(new Event(RENDER_BOOK));
+    saveBook();
+  });
+
+  if (isStorageExist()) {
+    getBooksFromStorage();
+  }
 });
 
 // BOOK CARD
@@ -105,6 +125,7 @@ function doneButtonHandler(bookId) {
   }
 
   document.dispatchEvent(new Event(RENDER_BOOK));
+  saveBook();
 }
 
 function undoButtonHandler(bookId) {
@@ -117,6 +138,7 @@ function undoButtonHandler(bookId) {
   }
 
   document.dispatchEvent(new Event(RENDER_BOOK));
+  saveBook();
 }
 
 function deleteButtonHandler(bookId) {
@@ -129,6 +151,7 @@ function deleteButtonHandler(bookId) {
   }
 
   document.dispatchEvent(new Event(RENDER_BOOK));
+  saveBook();
 }
 // ----------------------------------
 
@@ -178,6 +201,28 @@ function deleteButtonComponent() {
 }
 // ----------------------------------
 
+function saveBook() {
+  if (isStorageExist()) {
+    const parsed = JSON.stringify(books);
+    localStorage.setItem(STORAGE_KEY, parsed);
+    document.dispatchEvent(new Event(BOOKS_SAVED));
+  }
+}
+
+function getBooksFromStorage() {
+  const getBooks = localStorage.getItem(STORAGE_KEY);
+  let bookData = JSON.parse(getBooks);
+
+  console.log(bookData);
+  if (bookData !== null) {
+    for (const book of bookData) {
+      books.push(book);
+    }
+  }
+
+  document.dispatchEvent(new Event(RENDER_BOOK));
+}
+
 // RENDER BOOK CARD
 document.addEventListener(RENDER_BOOK, () => {
   const unreadBook = document.getElementById("unread");
@@ -197,3 +242,11 @@ document.addEventListener(RENDER_BOOK, () => {
   }
 });
 // ----------------------------------
+
+// Clear the storage
+clearButton.addEventListener("click", () => {
+  books.splice(0, books.length);
+
+  document.dispatchEvent(new Event(RENDER_BOOK));
+  saveBook();
+});
