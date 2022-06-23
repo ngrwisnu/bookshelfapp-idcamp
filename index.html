@@ -27,9 +27,9 @@
     <!-- MAIN CONTENT -->
     <main>
       <div class="container">
-        <div class="c-container">
+        <div id="main-container" class="c-container">
           <!-- Left section -->
-          <section class="l-side">
+          <section id="l-side" class="l-side">
             <h1>Time to update your Bookshelf</h1>
             <div class="filter">
               <input id="search" type="text" placeholder="Search book" />
@@ -40,20 +40,7 @@
               <!-- rak belum dibaca -->
               <div class="top-shelf">
                 <h5>Belum dibaca</h5>
-                <div id="unread" class="shelf">
-                  <!-- <div class="card">
-                    <div class="card-text">
-                      <span class="card-author">Dicoding</span>
-                      <span class="card-year">2022</span>
-                      <p class="card-title">Belajar membuat web untuk pemula</p>
-                    </div>
-
-                    <div class="card-buttons">
-                      <button class="card-btn-selesai">Selesai</button>
-                      <button class="card-btn-hapus">Hapus</button>
-                    </div>
-                  </div> -->
-                </div>
+                <div id="unread" class="shelf"></div>
               </div>
 
               <!-- rak sudah dibaca -->
@@ -65,7 +52,7 @@
           </section>
 
           <!-- Right section / form -->
-          <section class="r-side">
+          <section id="r-side" class="r-side">
             <div class="form-items">
               <h2>Tambahkan buku baru</h2>
 
@@ -123,6 +110,23 @@
               Hapus semua buku
             </button>
           </section>
+
+          <!-- Modal when clear all books button clicked -->
+          <!-- <div id="modal-bg" class="bg-blur">
+            <div id="modal-container" class="delete-modal active">
+              <div class="modal-body">
+                <span>Hapus semua buku</span>
+                <span
+                  >Apakah anda yakin ingin menghapus semua buku dari rak?</span
+                >
+              </div>
+
+              <div class="modal-buttons">
+                <button id="modal-cancel">Nanti dulu</button>
+                <button id="modal-delete">Ya, Hapus</button>
+              </div>
+            </div>
+          </div> -->
         </div>
       </div>
     </main>

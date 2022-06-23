@@ -7,6 +7,10 @@ const formInput = document.getElementById("form");
 const addBtn = document.getElementById("add");
 const clearButton = document.getElementById("delete");
 
+const mainContainer = document.getElementById("main-container");
+const modalCard = document.getElementById("modal-container");
+const modalBlur = document.getElementById("modal-bg");
+
 // Check Storage status
 function isStorageExist() {
   if (typeof Storage === undefined) {
@@ -243,10 +247,66 @@ document.addEventListener(RENDER_BOOK, () => {
 });
 // ----------------------------------
 
+const removeModal = () => {
+  const modalHead = document.createElement("span");
+  modalHead.innerText = "Hapus semua buku";
+
+  const modalBody = document.createElement("span");
+  modalBody.innerText =
+    "Apakah anda yakin ingin menghapus semua buku dari rak?";
+
+  const modalHeader = document.createElement("div");
+  modalHeader.classList.add("modal-body");
+  modalHeader.append(modalHead, modalBody);
+
+  const cancelModal = document.createElement("button");
+  cancelModal.innerText = "Nanti dulu";
+  cancelModal.setAttribute("id", "modal-cancel");
+
+  const deleteModal = document.createElement("button");
+  deleteModal.innerText = "Ya, hapus";
+  deleteModal.setAttribute("id", "modal-delete");
+
+  const modalFooter = document.createElement("div");
+  modalFooter.classList.add("modal-buttons");
+  modalFooter.append(cancelModal, deleteModal);
+
+  const modalContainer = document.createElement("div");
+  modalContainer.classList.add("delete-modal", "active");
+  modalContainer.append(modalHeader, modalFooter);
+
+  const modalBackground = document.createElement("div");
+  modalBackground.classList.add("bg-blur");
+  modalBackground.append(modalContainer);
+
+  return modalBackground;
+};
+
 // Clear the storage
 clearButton.addEventListener("click", () => {
-  books.splice(0, books.length);
+  const bookListFromStorage = localStorage.getItem(STORAGE_KEY);
+  const bookList = JSON.parse(bookListFromStorage);
 
-  document.dispatchEvent(new Event(RENDER_BOOK));
-  saveBook();
+  if (bookList.length == 0) {
+    console.log("Empty");
+  } else {
+    console.log(bookList.length);
+    const showModal = removeModal();
+    mainContainer.append(showModal);
+
+    const modalDeleteBtn = document.getElementById("modal-delete");
+    const modalCancelBtn = document.getElementById("modal-cancel");
+
+    modalCancelBtn.addEventListener("click", () => {
+      mainContainer.removeChild(showModal);
+    });
+
+    modalDeleteBtn.addEventListener("click", () => {
+      books.splice(0, books.length);
+      mainContainer.removeChild(showModal);
+
+      document.dispatchEvent(new Event(RENDER_BOOK));
+      saveBook();
+    });
+  }
 });
