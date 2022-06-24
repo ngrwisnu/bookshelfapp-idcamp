@@ -7,10 +7,9 @@ const RENDER_MODAL = "render-modal";
 const formInput = document.getElementById("form");
 const addBtn = document.getElementById("add");
 const clearButton = document.getElementById("delete");
-
 const mainContainer = document.getElementById("main-container");
-
 const modalBlur = document.getElementById("modal-bg");
+const searchInput = document.getElementById("search");
 
 // Check Storage status
 function isStorageExist() {
@@ -218,7 +217,6 @@ function getBooksFromStorage() {
   const getBooks = localStorage.getItem(STORAGE_KEY);
   let bookData = JSON.parse(getBooks);
 
-  console.log(bookData);
   if (bookData !== null) {
     for (const book of bookData) {
       books.push(book);
@@ -329,7 +327,7 @@ const emptyShelfModal = () => {
 
   const emptyModalContainer = document.createElement("div");
   emptyModalContainer.setAttribute("id", "es-container");
-  emptyModalContainer.classList.add("delete-modal", "active");
+  emptyModalContainer.classList.add("delete-modal");
   emptyModalContainer.append(emptyModalBody, emptyModalFooter);
 
   const emptyModalBg = document.createElement("div");
@@ -353,30 +351,44 @@ clearButton.addEventListener("click", () => {
     const modalCancelBtn = document.getElementById("modal-cancel");
 
     modalCancelBtn.addEventListener("click", () => {
-      mainContainer.removeChild(showModal);
+      removeChildren(showModal);
     });
   } else {
-    console.log(bookList.length);
     const showModal = removeModal();
     mainContainer.append(showModal);
 
     const modalDeleteBtn = document.getElementById("modal-delete");
     const modalCancelBtn = document.getElementById("modal-cancel");
-    const modalCard = document.getElementById("modal-container");
-
-    // Tujuan awalnya ingin menambahkan animasi pada modal
-    modalCard.classList.add("active");
 
     modalCancelBtn.addEventListener("click", () => {
-      mainContainer.removeChild(showModal);
+      removeChildren(showModal);
     });
 
     modalDeleteBtn.addEventListener("click", () => {
       books.splice(0, books.length);
-      mainContainer.removeChild(showModal);
+      removeChildren(showModal);
 
       document.dispatchEvent(new Event(RENDER_BOOK));
       saveBook();
     });
   }
 });
+
+function removeChildren(showModal) {
+  return mainContainer.removeChild(showModal);
+}
+
+// Handling Search Input
+searchInput.addEventListener("input", (e) => {
+  const inputValue = e.target.value.toLowerCase();
+
+  books.forEach((book) => {
+    const searchBook =
+      book.title.toLowerCase().includes(inputValue) ||
+      book.year.includes(inputValue);
+
+    const item = document.getElementById(`${book.bookID}`);
+    item.classList.toggle("hide", !searchBook);
+  });
+});
+// ----------------------------------

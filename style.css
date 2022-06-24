@@ -23,8 +23,6 @@
 body {
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
-  /* overflow-y: hidden;
-  position: fixed; */
 }
 
 header,
@@ -38,14 +36,12 @@ footer {
   position: relative;
   display: flex;
   justify-content: center;
-  /* border: 1px solid red; */
 }
 
 .c-container {
   width: 100%;
   max-width: 1440px;
   position: relative;
-  /* border: 1px solid black; */
 }
 
 .logo {
@@ -97,6 +93,10 @@ main .c-container {
   gap: 16px;
 }
 
+.l-side .card.hide {
+  display: none;
+}
+
 .l-side input,
 .r-side input {
   width: 270px;
@@ -146,7 +146,7 @@ main button:hover {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -154,19 +154,24 @@ main button:hover {
 .c-container .delete-modal {
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: sticky;
+  top: 2rem;
   width: 400px;
   background-color: var(--neutral-10);
   border-radius: 0.375em;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  transform: translateY(-10px);
-  opacity: 0;
-  transition: all 300ms ease-in-out;
+  animation: showModal 300ms ease-in-out alternate;
 }
 
-.c-container .delete-modal.active {
-  transform: translateY(0);
-  opacity: 1;
+@keyframes showModal {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .c-container .modal-body {
@@ -238,16 +243,6 @@ main button:hover {
 #es-container .modal-buttons button {
   background-color: var(--success-color);
 }
-
-#es-container svg {
-  width: 50px;
-  height: 50px;
-}
-
-/* #exclamation-circle {
-  width: 50px;
-  height: 50px;
-} */
 
 /* ------------------------------------------ */
 
@@ -334,7 +329,6 @@ main button:hover {
 
 .top-shelf,
 .bottom-shelf {
-  /* border: 1px solid orange; */
   width: 100%;
 }
 
@@ -352,7 +346,6 @@ main button:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  background-color: var(--secondary-color);
 }
 
 .c-container .r-side {
@@ -374,6 +367,8 @@ main button:hover {
 
 .r-side .form-items {
   display: flex;
+  position: sticky;
+  top: 2rem;
   flex-direction: column;
   justify-content: center;
 }
