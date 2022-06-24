@@ -2,13 +2,14 @@ const books = [];
 const RENDER_BOOK = "render-book";
 const BOOKS_SAVED = "books-saved";
 const STORAGE_KEY = "BOOKSHELF";
+const RENDER_MODAL = "render-modal";
 
 const formInput = document.getElementById("form");
 const addBtn = document.getElementById("add");
 const clearButton = document.getElementById("delete");
 
 const mainContainer = document.getElementById("main-container");
-const modalCard = document.getElementById("modal-container");
+
 const modalBlur = document.getElementById("modal-bg");
 
 // Check Storage status
@@ -272,7 +273,8 @@ const removeModal = () => {
   modalFooter.append(cancelModal, deleteModal);
 
   const modalContainer = document.createElement("div");
-  modalContainer.classList.add("delete-modal", "active");
+  modalContainer.classList.add("delete-modal");
+  modalContainer.setAttribute("id", "modal-container");
   modalContainer.append(modalHeader, modalFooter);
 
   const modalBackground = document.createElement("div");
@@ -282,13 +284,77 @@ const removeModal = () => {
   return modalBackground;
 };
 
+// Empty Shelf Modal
+const emptyShelfModal = () => {
+  const pathIcon = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "path"
+  );
+  pathIcon.setAttribute("id", "Icon");
+  pathIcon.setAttribute(
+    "d",
+    "M25 16.6667V25M25 33.3333H25.0208M43.75 25C43.75 35.3553 35.3553 43.75 25 43.75C14.6447 43.75 6.25 35.3553 6.25 25C6.25 14.6447 14.6447 6.25 25 6.25C35.3553 6.25 43.75 14.6447 43.75 25Z"
+  );
+  pathIcon.setAttribute("stroke", "#2E7A2C");
+  pathIcon.setAttribute("stroke-width", "4");
+  pathIcon.setAttribute("stroke-linecap", "round");
+  pathIcon.setAttribute("stroke-linejoin", "round");
+
+  const gIcon = document.createElement("g");
+  gIcon.setAttribute("id", "exclamation-circle");
+  gIcon.append(pathIcon);
+
+  const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svgIcon.setAttribute("width", "50");
+  svgIcon.setAttribute("height", "50");
+  svgIcon.setAttribute("viewBox", "0 0 50 50");
+  svgIcon.setAttribute("fill", "none");
+  svgIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  svgIcon.append(gIcon);
+
+  const textBody = document.createElement("span");
+  textBody.innerText = "Lemari anda sedang kosong sekarang";
+
+  const emptyModalBody = document.createElement("div");
+  emptyModalBody.classList.add("modal-body");
+  emptyModalBody.append(svgIcon, textBody);
+
+  const button = document.createElement("button");
+  button.innerText = "Tambahkan buku baru";
+  button.setAttribute("id", "modal-cancel");
+
+  const emptyModalFooter = document.createElement("div");
+  emptyModalFooter.classList.add("modal-buttons");
+  emptyModalFooter.append(button);
+
+  const emptyModalContainer = document.createElement("div");
+  emptyModalContainer.setAttribute("id", "es-container");
+  emptyModalContainer.classList.add("delete-modal", "active");
+  emptyModalContainer.append(emptyModalBody, emptyModalFooter);
+
+  const emptyModalBg = document.createElement("div");
+  emptyModalBg.setAttribute("id", "empty-shelf-bg");
+  emptyModalBg.classList.add("bg-blur");
+  emptyModalBg.append(emptyModalContainer);
+
+  return emptyModalBg;
+};
+// ----------------------------------
+
 // Clear the storage
 clearButton.addEventListener("click", () => {
   const bookListFromStorage = localStorage.getItem(STORAGE_KEY);
   const bookList = JSON.parse(bookListFromStorage);
 
   if (bookList.length == 0) {
-    console.log("Empty");
+    const showModal = emptyShelfModal();
+    mainContainer.append(showModal);
+
+    const modalCancelBtn = document.getElementById("modal-cancel");
+
+    modalCancelBtn.addEventListener("click", () => {
+      mainContainer.removeChild(showModal);
+    });
   } else {
     console.log(bookList.length);
     const showModal = removeModal();
@@ -296,6 +362,10 @@ clearButton.addEventListener("click", () => {
 
     const modalDeleteBtn = document.getElementById("modal-delete");
     const modalCancelBtn = document.getElementById("modal-cancel");
+    const modalCard = document.getElementById("modal-container");
+
+    // Tujuan awalnya ingin menambahkan animasi pada modal
+    modalCard.classList.add("active");
 
     modalCancelBtn.addEventListener("click", () => {
       mainContainer.removeChild(showModal);
