@@ -3,15 +3,22 @@
 
   /* Color */
   --main-color: hsl(207, 64%, 18%);
+  --main-hovered: hsl(207, 65%, 12%);
+
   --secondary-color: hsl(46, 38%, 85%);
   --border-color: hsl(116, 14%, 78%);
+  --button-secondary: hsl(223, 22%, 53%);
+
   --danger-color: hsl(4, 61%, 49%);
   --danger-surface: hsla(9, 100%, 97%, 1);
+  --danger-pressed: hsl(4, 73%, 26%);
+
   --neutral-10: hsl(0, 0%, 100%);
   --neutral-60: hsl(0, 0%, 64%);
   --neutral-90: hsl(0, 0%, 29%);
+
   --success-color: hsl(118, 47%, 33%);
-  --button-secondary: hsl(223, 22%, 53%);
+  --success-pressed: hsl(119, 57%, 25%);
 }
 
 * {
@@ -91,6 +98,13 @@ main .c-container {
   display: flex;
   justify-content: center;
   gap: 16px;
+}
+
+.l-side .filter input {
+  background-image: url("images/search-icon.svg");
+  background-repeat: no-repeat;
+  background-position: 10% 50%;
+  padding: 8px 20px 8px calc(20px + 4%);
 }
 
 .l-side .card.hide {
@@ -298,6 +312,16 @@ main button:hover {
   background-color: transparent;
 }
 
+.card-buttons .card-btn-selesai:hover {
+  background-color: var(--success-color);
+  color: var(--neutral-10);
+  transition: all 300ms ease-in-out;
+}
+
+.card-buttons .card-btn-selesai:active {
+  background-color: var(--success-pressed);
+}
+
 .card-buttons .card-btn-hapus {
   display: flex;
   justify-content: center;
@@ -308,6 +332,16 @@ main button:hover {
   background-color: var(--danger-surface);
 }
 
+.card-buttons .card-btn-hapus:hover {
+  background-color: var(--danger-color);
+  color: var(--neutral-10);
+  transition: all 300ms ease-in-out;
+}
+
+.card-buttons .card-btn-hapus:active {
+  background-color: var(--danger-pressed);
+}
+
 .card-buttons .card-btn-undo {
   display: flex;
   justify-content: center;
@@ -316,6 +350,16 @@ main button:hover {
   border: 1px solid var(--button-secondary);
   color: var(--button-secondary);
   background-color: transparent;
+}
+
+.card-buttons .card-btn-undo:hover {
+  background-color: var(--button-secondary);
+  color: var(--neutral-10);
+  transition: all 300ms ease-in-out;
+}
+
+.card-buttons .card-btn-undo:active {
+  background-color: var(--neutral-90);
 }
 
 /* ------------------------------------------ */
@@ -354,7 +398,8 @@ main button:hover {
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
   background-color: var(--secondary-color);
 }
 
@@ -408,12 +453,27 @@ main button:hover {
   border: 1px var(--main-color) solid;
 }
 
+.r-side button.add:hover {
+  background-color: var(--main-hovered);
+  transition: all 300ms ease-in-out;
+}
+
 .r-side button.delete {
   color: var(--danger-color);
   border: 1px var(--danger-color) solid;
   background-color: transparent;
   position: absolute;
   bottom: 3rem;
+}
+
+.r-side button.delete:hover {
+  background-color: var(--danger-color);
+  color: var(--neutral-10);
+  transition: all 300ms ease-in-out;
+}
+
+.r-side button.delete:active {
+  background-color: var(--danger-pressed);
 }
 
 /* FOOTER */
@@ -429,6 +489,41 @@ footer .c-container {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+footer .c-container .f-links {
+  display: flex;
+  gap: 10rem;
+}
+
+footer h3 {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  line-height: 1.5rem;
+  color: var(--neutral-10);
+}
+
+footer ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+footer ul li {
+  list-style: none;
+}
+
+footer a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--neutral-10);
+}
+
+footer a:hover {
+  color: var(--secondary-color);
 }
 
 footer .c-container span {
