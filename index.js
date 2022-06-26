@@ -284,38 +284,17 @@ const removeModal = () => {
 
 // Empty Shelf Modal
 const emptyShelfModal = () => {
-  const pathIcon = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "path"
-  );
-  pathIcon.setAttribute("id", "Icon");
-  pathIcon.setAttribute(
-    "d",
-    "M25 16.6667V25M25 33.3333H25.0208M43.75 25C43.75 35.3553 35.3553 43.75 25 43.75C14.6447 43.75 6.25 35.3553 6.25 25C6.25 14.6447 14.6447 6.25 25 6.25C35.3553 6.25 43.75 14.6447 43.75 25Z"
-  );
-  pathIcon.setAttribute("stroke", "#2E7A2C");
-  pathIcon.setAttribute("stroke-width", "4");
-  pathIcon.setAttribute("stroke-linecap", "round");
-  pathIcon.setAttribute("stroke-linejoin", "round");
-
-  const gIcon = document.createElement("g");
-  gIcon.setAttribute("id", "exclamation-circle");
-  gIcon.append(pathIcon);
-
-  const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svgIcon.setAttribute("width", "50");
-  svgIcon.setAttribute("height", "50");
-  svgIcon.setAttribute("viewBox", "0 0 50 50");
-  svgIcon.setAttribute("fill", "none");
-  svgIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  svgIcon.append(gIcon);
+  const imgIcon = document.createElement("img");
+  imgIcon.setAttribute("src", "images/exclamation-circle.svg");
+  imgIcon.setAttribute("alt", "exclamation-icon");
+  imgIcon.setAttribute("width", "50");
 
   const textBody = document.createElement("span");
   textBody.innerText = "Lemari anda sedang kosong sekarang";
 
   const emptyModalBody = document.createElement("div");
   emptyModalBody.classList.add("modal-body");
-  emptyModalBody.append(svgIcon, textBody);
+  emptyModalBody.append(imgIcon, textBody);
 
   const button = document.createElement("button");
   button.innerText = "Tambahkan buku baru";
@@ -385,6 +364,7 @@ searchInput.addEventListener("input", (e) => {
   books.forEach((book) => {
     const searchBook =
       book.title.toLowerCase().includes(inputValue) ||
+      book.author.toLowerCase().includes(inputValue) ||
       book.year.includes(inputValue);
 
     const item = document.getElementById(`${book.bookID}`);

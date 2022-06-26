@@ -113,7 +113,7 @@ main .c-container {
 
 .l-side input,
 .r-side input {
-  width: 270px;
+  width: 300px;
   padding: 8px 20px;
   display: flex;
   align-items: center;
@@ -127,7 +127,7 @@ main .c-container {
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  color: var(--neutral-90);
+  color: var(--neutral-60);
 }
 
 .l-side button {
@@ -252,6 +252,8 @@ main button:hover {
 #es-container .modal-body {
   flex-direction: row;
   align-items: center;
+  position: sticky;
+  top: 2rem;
 }
 
 #es-container .modal-buttons button {
@@ -459,11 +461,18 @@ main button:hover {
 }
 
 .r-side button.delete {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--danger-color);
   border: 1px var(--danger-color) solid;
   background-color: transparent;
   position: absolute;
   bottom: 3rem;
+}
+
+.r-side button.delete i {
+  font-size: 20px;
 }
 
 .r-side button.delete:hover {
